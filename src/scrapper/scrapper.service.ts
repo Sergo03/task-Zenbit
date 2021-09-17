@@ -9,18 +9,20 @@ import {CreateDto} from '../modules/data/controller/dto'
 export class ScrapperService {
     constructor(private readonly dataService: DataService) { }
     
-     addData(result) {
+    async addData(result) {
+         
         
-        result.forEach(e => {
-            const data = new Data()
-            const existData =  this.dataService.findData(e.title)
-            console.log(existData);
-            // if (!existData) {
-            // data.title = e.title
-            // data.price = e.price
-            // data.city = e.city
-            // return this.dataService.create(data)
-            // }
+        result.forEach(async (e) => {
+            
+            const existData = await this.dataService.findData(e.title)
+            
+            if (!existData) {
+                const data = new Data()
+                data.title = e.title
+                data.price = e.price
+                data.city = e.city
+                return this.dataService.create(data)
+            }
             return
         });
         
@@ -43,7 +45,7 @@ export class ScrapperService {
                 const data = {
                     title: z.querySelector('td.title-cell > div > h3 > a > strong')?.textContent,
                     price: z.querySelector('td.wwnormal.tright.td-price > div > p > strong')?.textContent,
-                    city: z.querySelector('td.bottom-cell > div > p > small:nth-child(1) > span')?.textContent
+                    city: z.querySelector('td.bottom-cell > div > p > small:nth-child(1) > span')?.textContent,
                 }
                 propertyList.push(data);
             })
@@ -52,7 +54,7 @@ export class ScrapperService {
         })
 
         await browser.close();
-        
+       
        this.addData(results)
        return results;
     }   

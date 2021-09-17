@@ -19,7 +19,7 @@ export class DataService {
   }
 
   findData(title: string): Promise<Data>{
-    return this.dataRepository.findOne(title)
+    return this.dataRepository.findOne({where:{title:title}})
   }
 
   create(data: Data): Promise<Data> {

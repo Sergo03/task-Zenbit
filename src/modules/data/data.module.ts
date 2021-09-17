@@ -6,12 +6,17 @@ import {DataService} from './services/data.service'
 import { ScrapperModule } from 'src/scrapper/scrapper.module';
 import { ScrapperController } from 'src/scrapper/scrapper.controller';
 import { ScrapperService } from 'src/scrapper/scrapper.service';
+import { TasksService } from 'src/shedule/shedule.service';
+
+import { ScheduleModule } from '@nestjs/schedule';
+import { SheduleController } from 'src/shedule/shedule.controller';
 
   
 @Module({
-  imports: [TypeOrmModule.forFeature([Data]),ScrapperModule],
+  imports: [TypeOrmModule.forFeature([Data]),ScrapperModule,ScheduleModule.forRoot()],
   controllers: [DataController,ScrapperController],
-  providers: [DataService,ScrapperService],
+  providers: [DataService, ScrapperService,TasksService,ScrapperController],
+  // exports:[ScrapperController]
 })
   
 export class DataModule {}
