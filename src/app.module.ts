@@ -7,8 +7,9 @@ import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [TypeOrmModule.forRoot(), DataModule,
-  ScheduleModule.forRoot()],
-  controllers: [AppController],
-  providers: [AppService],
+  ScheduleModule.forRoot()
+  ],
+  controllers: [AppController ],
+  providers: [AppService ],
 })
 export class AppModule {}

@@ -8,8 +8,9 @@ export class Data {
   @Column()
   title: string;
 
-  @Column()
-  price: number;
+  @Column({default:null})
+  price?: string;
 
-  
+  @Column()
+  city: string;
 }
