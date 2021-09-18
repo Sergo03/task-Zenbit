@@ -8,7 +8,6 @@ export class ScrapperController {
     
     @Get()
     scrapperController() {
-       
         return this.scrapperService.getData()
     }
 

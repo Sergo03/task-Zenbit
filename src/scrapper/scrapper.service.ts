@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer'
 import { DataService } from '../modules/data/services/data.service';
 import { Data } from '../modules/data/entities/data.entity'
-import {CreateDto} from '../modules/data/controller/dto'
 
 
 @Injectable()
@@ -10,8 +9,6 @@ export class ScrapperService {
     constructor(private readonly dataService: DataService) { }
     
     async addData(result) {
-         
-        
         result.forEach(async (e) => {
             
             const existData = await this.dataService.findData(e.title)
@@ -25,7 +22,6 @@ export class ScrapperService {
             }
             return
         });
-        
      }
     
     async getData() {
@@ -39,9 +35,7 @@ export class ScrapperService {
         });
         const results = await page.evaluate(() => {
             const propertyList = []
-            
             document.querySelectorAll('.wrap').forEach((z) => {
-                
                 const data = {
                     title: z.querySelector('td.title-cell > div > h3 > a > strong')?.textContent,
                     price: z.querySelector('td.wwnormal.tright.td-price > div > p > strong')?.textContent,
@@ -49,13 +43,11 @@ export class ScrapperService {
                 }
                 propertyList.push(data);
             })
-            return propertyList;
-            
+            return propertyList; 
         })
 
-        await browser.close();
-       
+       await browser.close();
        this.addData(results)
        return results;
-    }   
+    }
 }
